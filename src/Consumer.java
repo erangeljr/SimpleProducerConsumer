@@ -10,6 +10,9 @@ public class Consumer implements Runnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		System.out.printf("Consumer %d is making an item.\n", ID);
+		try{}
+		catch(Exception e){}
 
 	}
 

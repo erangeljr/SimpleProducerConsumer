@@ -8,6 +8,9 @@ public class Producer implements Runnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
+		System.out.printf("Producer %d is making an item.\n", ID);
+		try{}
+		catch(Exception e){}
 
 	}
 
