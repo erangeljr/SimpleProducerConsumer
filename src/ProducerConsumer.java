@@ -1,3 +1,4 @@
+import java.util.Random;
 
 public class ProducerConsumer {
 	
@@ -20,7 +21,7 @@ class ProducerConsumerMonitor {
 	int label = 1;
 	int contain[] = new int [10], in = 0, out = 0, count = 0;
 
-	public synchronized int put(){
+	public synchronized int put(int data){
 
 		return 0;
 	}
@@ -32,7 +33,10 @@ class ProducerConsumerMonitor {
 }
 
 class Producer implements Runnable {
-	int ID; ProducerConsumerMonitor mtr;
+	int ID; 
+	ProducerConsumerMonitor mtr;
+	private final static Random generator=new Random();
+	
 	public Producer(int id, ProducerConsumerMonitor pcMonitor){
 		ID = id; this.mtr = pcMonitor;
 	}
@@ -41,8 +45,23 @@ class Producer implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 		System.out.printf("Producer %d is making an item.\n", ID);
-		try{}
-		catch(Exception e){}
+				
+			for( int count=1; count<=10; count++ )
+			{
+				try
+				{
+					Thread.sleep(generator.nextInt(3000 ) );
+					mtr.put(count);
+					System.out.printf("\t%2d\n", count );
+				}			
+				catch(InterruptedException exception )
+				{
+					exception.printStackTrace();
+				}
+			}
+		
+		System.out.println(
+		"Producerdoneproducing\nTerminatingProducer" );
 
 	}
 
@@ -50,7 +69,9 @@ class Producer implements Runnable {
 
 class Consumer implements Runnable {
 	
-	int ID; ProducerConsumerMonitor mtr;
+	int ID; 
+	ProducerConsumerMonitor mtr;
+	private final static Random generator=new Random();
 	
 	public Consumer(int id, ProducerConsumerMonitor pcMonitor){
 		ID = id; this.mtr = pcMonitor;
@@ -60,9 +81,26 @@ class Consumer implements Runnable {
 	public void run() {
 		// TODO Auto-generated method stub
 		System.out.printf("Consumer %d is making an item.\n", ID);
-		try{}
-		catch(Exception e){}
-
-	}
+		int item = 0;
+		for( int count=1; count<=10; count++ )
+		{
+			try
+			{
+				Thread.sleep(generator.nextInt(3000 ) );
+				item = mtr.get();
+				System.out.printf("\t%2d\n", item );
+			}			
+			catch(InterruptedException exception )
+			{
+				exception.printStackTrace();
+			}
+		}
+	
+	System.out.println(
+	"Producerdoneproducing\nTerminatingProducer" );
 
 }
+
+}
+
+
